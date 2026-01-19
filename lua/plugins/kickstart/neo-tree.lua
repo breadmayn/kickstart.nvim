@@ -11,14 +11,24 @@ return {
   },
   lazy = false,
   keys = {
-    { '\\', ':Neotree reveal<CR>', desc = 'NeoTree reveal', silent = true },
+    {
+      '<leader>e',
+      function()
+        vim.cmd 'Neotree toggle reveal'
+      end,
+      desc = 'Toggle file explorer (and reveal selected file)',
+    },
   },
   opts = {
     filesystem = {
-      window = {
-        mappings = {
-          ['\\'] = 'close_window',
-        },
+      follow_current_file = { enabled = true },
+    },
+    event_handlers = {
+      {
+        event = 'file_opened',
+        handler = function()
+          vim.cmd 'Neotree close'
+        end,
       },
     },
   },
