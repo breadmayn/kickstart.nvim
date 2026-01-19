@@ -6,6 +6,28 @@ return {
   name = 'window-picker',
   event = 'VeryLazy',
   version = '2.*',
+  keys = {
+    {
+      '<leader>w',
+      function()
+        local win = require('window-picker').pick_window()
+        if win then
+          vim.api.nvim_set_current_win(win)
+        end
+      end,
+      desc = 'Focus window (pick)',
+    },
+    {
+      '<leader>W',
+      function()
+        local win = require('window-picker').pick_window()
+        if win then
+          vim.api.nvim_win_set_buf(win, vim.api.nvim_get_current_buf())
+        end
+      end,
+      desc = 'Send buffer to specified window',
+    },
+  },
   opts = {
     hint = 'floating-big-letter',
     selection_chars = 'FJDKSLA;CMRUEIWOQP',
