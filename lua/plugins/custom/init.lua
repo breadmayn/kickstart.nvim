@@ -2,5 +2,6 @@
 
 return {
   require 'plugins.custom.bufferline',
+  require 'plugins.custom.kanagawa-colorscheme',
   require 'plugins.custom.window-picker',
 }
