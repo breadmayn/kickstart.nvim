@@ -1,4 +1,4 @@
--- C++ ftplugin (pre-clangd LSP)
+-- C ftplugin (pre-clangd editor behaviors
 -- Purpose: editor typing behavior, not formatting or linting
 
 -- prefer Vim's builtin C indent rules for predictable behavior
@@ -16,9 +16,17 @@ vim.opt_local.expandtab = true
 -- make backspace behave like an IDE
 vim.opt_local.backspace = { 'indent', 'eol', 'start' }
 
--- good default comment formatting: doesn't reflow code aggressively
-vim.opt_local.formatoptions:remove { 'c', 'r', 'o' }
-vim.opt_local.formatoptions:append { 'j' }
+-- formatting options
+-- c: auto-wrap comments
+-- r: continue comments
+-- o: continue with o
+-- q: allow gq formatting
+-- l: don't break long code lines
+-- j: clean comment joins
+-- n: better numbered lists
+-- t: automatic text wrapping (NOT COMMENTS like c)
 
--- access modifier does not cause indents
+vim.opt_local.formatoptions = vim.opt_local.formatoptions + 'ro'
+
+-- access modifier indent tweak
 vim.opt_local.cinoptions:append 'g0'
