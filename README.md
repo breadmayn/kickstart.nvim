@@ -29,6 +29,10 @@ External Requirements:
 - A [Nerd Font](https://www.nerdfonts.com/): optional, provides various icons
   - if you have it set `vim.g.have_nerd_font` in `init.lua` to true
 - Emoji fonts (Ubuntu only, and only if you want emoji!) `sudo apt install fonts-noto-color-emoji`
+- [bmach] Extra Setup:
+    - [tree-sitter, tree-sitter-cli]: treesitter cli helps debug issues with treesitter on installation and configuration
+    - I like 0xProto nerd font
+        - Copy downloaded folder called 0xProto into ~/Library/fonts/ then apply in terminal settings for macos
 - Language Setup:
   - If you want to write Typescript, you need `npm`
   - If you want to write Golang, you will need `go`
