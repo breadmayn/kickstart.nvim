@@ -8,27 +8,77 @@ return {
     'OverseerToggle',
     'OverseerOpen',
   },
-  opts = {},
+  opts = {
+    output = { use_terminal = true },
+    task_list = { direction = 'bottom' },
+  },
+
+  -- do side effects (setup + template registration here)
+  config = function(_, opts)
+    local overseer = require 'overseer'
+    overseer.setup(opts)
+
+    overseer.register_template {
+      name = 'cmake: build',
+      builder = function()
+        return {
+          cmd = { 'cmake', '--build', 'build', '-j' },
+          components = {
+            { 'on_output_quickfix', open = false },
+            'default',
+          },
+        }
+      end,
+
+      condition = {
+        callback = function()
+          return vim.fs.find('CMakeLists.txt', { upward = true })[1] ~= nil
+        end,
+      },
+    }
+
+    overseer.register_template {
+      name = 'ctest: run',
+      builder = function()
+        return {
+          cmd = { 'ctest', '--test-dir', 'build', '--output-on-failure', '--progress' },
+          components = {
+            { 'on_output_quickfix', open = true },
+            'default',
+          },
+        }
+      end,
+
+      condition = {
+        callback = function()
+          return vim.fs.find('CMakeLists.txt', { upward = true })[1] ~= nil
+        end,
+      },
+    }
+  end,
   keys = {
-    { -- build project with OverseerRun
-      '<leader>or',
-      '<cmd>OverseerRun<CR>',
-      desc = 'Oversser: Run task',
-    },
     { -- explicit toggle for task buffer
       '<leader>ot',
       '<cmd>OverseerToggle<CR>',
-      desc = 'Oversser: Toggle',
+      desc = '[O]verseer [T]oggle',
     },
-    { -- build project with cmake
-      '<leader>cb',
-      '<cmd>OverseerShell cmake --build build<CR>',
-      desc = 'CMake: Build',
+
+    --
+    -- CMake keymaps
+    --
+    { -- Make build keymap for overseer task runner
+      '<leader>mb',
+      function()
+        require('overseer').run_task { name = 'cmake: build' }
+      end,
+      desc = '[M]ake [B]uild (Overseer)',
     },
-    { -- build and configure project with cmake
-      '<leader>cc',
-      '<cmd>OverseerShell cmake -S . -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON<CR>',
-      desc = 'CMake: Configure',
+    { -- Make test using ctest testing process framework
+      '<leader>mt',
+      function()
+        require('overseer').run_task { name = 'ctest: run' }
+      end,
+      desc = '[M]ake [T]est (Overseer)',
     },
   },
 }

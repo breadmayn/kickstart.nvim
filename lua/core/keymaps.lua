@@ -47,11 +47,18 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 vim.keymap.set('i', '<M-b>', '<C-o>b', { desc = 'Move to the beginning of the previous word in insert-mode' })
 vim.keymap.set('i', '<M-f>', '<C-o>w', { desc = 'Move to the beginning of the next word in insert-mode' })
 
--- build runner keymaps
-local runner = require 'build.runner'
+--
+-- overseer task runner keymaps
+--
+vim.keymap.set('n', '<leader>mb', function()
+  local overseer = require 'overseer'
+  overseer.run_task { name = 'cmake:build' }
+end, { desc = '[M]ake [B]uild (Overseer)' })
 
-vim.keymap.set('n', '<leader>mb', runner.build, { desc = '[M]ake [B]uild (:make)' })
-vim.keymap.set('n', '<leader>mt', runner.test, { desc = '[M]ake [T]est (:make test)' })
+vim.keymap.set('n', '<leader>mt', function()
+  local overseer = require 'overseer'
+  overseer.run_task { name = 'ctest: run' }
+end, { desc = '[M]ake [T]est (Overseer)' })
 
 vim.keymap.set('n', '<leader>q', function()
   local win = vim.fn.getqflist({ winid = 0 }).winid
@@ -61,5 +68,6 @@ vim.keymap.set('n', '<leader>q', function()
     vim.cmd 'copen'
   end
 end, { desc = 'Quickfix toggle' })
+
 vim.keymap.set('n', ']q', '<cmd>cnext<CR>', { desc = 'Quickfix next' })
 vim.keymap.set('n', '[q', '<cmd>cprev<CR>', { desc = 'Quickfix prev' })
