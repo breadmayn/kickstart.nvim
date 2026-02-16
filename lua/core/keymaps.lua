@@ -46,3 +46,20 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 -- macos-like navigation in insert mode
 vim.keymap.set('i', '<M-b>', '<C-o>b', { desc = 'Move to the beginning of the previous word in insert-mode' })
 vim.keymap.set('i', '<M-f>', '<C-o>w', { desc = 'Move to the beginning of the next word in insert-mode' })
+
+-- build runner keymaps
+local runner = require 'build.runner'
+
+vim.keymap.set('n', '<leader>mb', runner.build, { desc = 'Build (:make)' })
+vim.keymap.set('n', '<leader>mt', runner.test, { desc = 'Test (:make test)' })
+
+vim.keymap.set('n', '<leader>q', function()
+  local win = vim.fn.getqflist({ winid = 0 }).winid
+  if win ~= 0 then
+    vim.cmd 'cclose'
+  else
+    vim.cmd 'copen'
+  end
+end, { desc = 'Quickfix toggle' })
+vim.keymap.set('n', ']q', '<cmd>cnext<CR>', { desc = 'Quickfix next' })
+vim.keymap.set('n', '[q', '<cmd>cprev<CR>', { desc = 'Quickfix prev' })
