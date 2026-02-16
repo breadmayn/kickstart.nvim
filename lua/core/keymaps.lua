@@ -50,8 +50,8 @@ vim.keymap.set('i', '<M-f>', '<C-o>w', { desc = 'Move to the beginning of the ne
 -- build runner keymaps
 local runner = require 'build.runner'
 
-vim.keymap.set('n', '<leader>mb', runner.build, { desc = 'Build (:make)' })
-vim.keymap.set('n', '<leader>mt', runner.test, { desc = 'Test (:make test)' })
+vim.keymap.set('n', '<leader>mb', runner.build, { desc = '[M]ake [B]uild (:make)' })
+vim.keymap.set('n', '<leader>mt', runner.test, { desc = '[M]ake [T]est (:make test)' })
 
 vim.keymap.set('n', '<leader>q', function()
   local win = vim.fn.getqflist({ winid = 0 }).winid
