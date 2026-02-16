@@ -1,5 +1,13 @@
 -- nvim build runner
 --
+-- Personal project cmake configuration
+-- vim.opt.makeprg = "cmake --build build"
+-- vim.g.nvim_testprg = "ctest --test-dir build --output-on-failure"
+-- -- optionally: configure set if build dir doesn't exist (keeping simple for now)
+
+-- -- often default errorformat is already fine for clang/gcc output
+-- -- if you need it later, add it here
+--
 
 local M = {}
 
