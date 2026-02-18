@@ -2,7 +2,7 @@
 -- https://github.com/KieranCanter/candela.nvim
 
 return {
-  'KieranCenter/candela.nvim',
+  'KieranCanter/candela.nvim',
   cmd = { 'Candela' }, -- lazy-load when you run :Candela
   opts = {
     engine = {
